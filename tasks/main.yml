@@ -1,0 +1,13 @@
+---
+- name: Read Apt Config
+  become: false
+  command: sh -lc 'cat /etc/apt/sources.list /etc/apt/sources.list.d/*.list'
+  register: apt_sources_raw
+  changed_when: false
+
+- name: Set Apt Sources Fact
+  become: false
+  set_fact:
+    apt_sources: "{{ apt_sources_raw.stdout_lines | unique | select('match', '^deb .*$') | list }}"
+  changed_when: false
+
