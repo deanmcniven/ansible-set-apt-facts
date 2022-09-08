@@ -2,6 +2,7 @@
 - name: Read Apt Config
   become: false
   command: sh -lc 'cat /etc/apt/sources.list /etc/apt/sources.list.d/*.list'
+  failed_when: false
   register: apt_sources_raw
   changed_when: false
 
